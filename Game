@@ -1,0 +1,168 @@
+#TIC TAC GAME 3X3 matrix
+
+def create_matrix():
+    l=[[]for i in range(0,3)]
+    for i in range(0,3):
+        l[i]=list(map(int,input().split()))
+    return l
+
+def Display_matrix(l):
+    count=0
+    for i in range(0,3):
+        for j in range(0,3):
+                print(l[i][j],"|",end="")
+        print("\n---------")
+    
+
+def check_grid(l,inp1,symbol):
+    if(inp1<=3):
+        i=0
+        j=inp1-1
+        if(l[i][j]==0):
+            l[i][j]=symbol
+        
+        else:
+            flag=1
+            print("cant enter here")
+    elif(inp1>3 and inp1<=6):
+        i=1
+        j=inp1-4
+        if(l[i][j]==0):
+            l[i][j]=symbol
+        else:
+            print("cant enter here")
+    elif(inp1>6 and inp1<=9):
+        i=2
+        j=inp1-7
+        if(l[i][j]==0):
+            l[i][j]=symbol
+        else:
+            print("cant enter here")
+        
+    else:
+        print("enter proper number");
+        exit()
+        
+        
+def check_matrix(matrix):
+    for i in range(0,3):
+        for j in range(0,3):
+            if matrix[i][j]==0:
+                print("not full")
+                return 1
+    print("full")
+    return 0
+
+def check_row(matrix):
+    count1=1
+    for i in range(0,3):
+        count1=1
+        for j in range(0,2):
+            
+            if(matrix[i][j]!=0 and matrix[i][j]==matrix[i][j+1]):
+                count1=count1+1;
+                if count1==3:
+                    symbol=matrix[i][j]
+                    if(symbol=='z'):
+                        print("player1 is the winner")
+                    else:
+                        print("player2 is the winner")
+                    exit()
+def check_column(matrix):
+    count2=1
+    for i in range(0,3):
+        count2=1
+        for j in range(0,2):
+                 if matrix[j][i]==matrix[j+1][i] and matrix[j][i]!=0:
+                    count2=count2+1
+                 if count2==3:
+                    symbol=matrix[j][i]
+                    if(symbol=='z'):
+                        print("player1 is the winner")
+                    else:
+                        print("player2 is the winner")
+                    exit()
+    
+    
+def check_diagonal(matrix):
+    count3=0
+    for i in range(0,2):
+        for j in range(0,2):
+            if i==j:
+                if(matrix[i][j]!=0 and matrix[i][j]==matrix[i+1][j+1]):
+                    count3=count3+1
+                if(count3==2):
+                    symbol=matrix[i][j]
+                    if(symbol=='z'):
+                        print("Player1 is the winner diagonal")
+                    else:
+                        print("Player2 is the winner diagonal")
+                    exit()
+def check_antidiagonal(matrix):
+    count4=0
+    if (matrix[0][2]!=0 or matrix[2][0]!=0):
+        if(matrix[0][2]==matrix[1][1] and matrix[1][1]==matrix[2][0]):
+            if(matrix[0][2]=='z'):
+                print("player1 wins anti diagonal")
+            else:
+                print("player2 wins anti diagonal")
+            
+            exit()
+matrix=create_matrix() 
+print("Choose your symbol:")
+player1,player2=map(str,input().split())
+print("Your initial matrix")
+Display_matrix(matrix)
+input_list=[]
+while(check_matrix(matrix)==1):
+    print("player1 enter your move")
+    inp1=int(input())
+    if  inp1 not in input_list:
+        input_list.append(inp1)
+        check_grid(matrix,inp1,player1)
+        Display_matrix(matrix)
+    else:
+        print("sorry cant enter here \n ENTER ANOTHER NUMBER CORRECTLY")
+        
+    check_row(matrix)
+    check_column(matrix)
+    check_diagonal(matrix)
+    check_antidiagonal(matrix)
+    
+    if check_matrix(matrix)==1:
+        print("player2 enter your move")
+        inp2=int(input())
+        if  inp2 not in input_list:
+            input_list.append(inp2)
+            number2=check_grid(matrix,inp2,player2)
+            Display_matrix(matrix)
+        else:
+            print("sorry cant enter here\nENTER ANOTHER NUMBER CORRECTLY")
+    else:
+        print("MATCH DRAWED")
+        exit()
+
+    
+    check_row(matrix)
+    check_column(matrix)
+    check_diagonal(matrix)
+    check_antidiagonal(matrix)
+    
+
+#INPUT-
+
+#0 0 0                             
+#0 0 0
+#0 0 0
+#z x
+#1
+#2
+#7
+#4
+#8
+#5
+#9
+#6
+#3
+
+
